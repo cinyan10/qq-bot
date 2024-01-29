@@ -113,3 +113,37 @@ async def query_server_embed(server: Server, bot=None) -> Embed:
     except Exception as e:
         print(f"Error: {e}")
         return Embed(title="Error")
+
+
+def query_server_text(server):  # NOQA
+    try:
+        with a2s.ServerQuerier((server.ip, server.port)) as s:
+            info = s.info()
+            players = s.players()
+            try:
+                tier = MAP_TIERS[info['map']]
+            except Exception:  # NOQA
+                tier = 'T0'
+        content = (f"AXE GOKZ {server.name_short[:2]}#{server.name_short[2]} | "
+                   f"{info['map']} "
+                   f'T{tier}  '
+                   f"{info['player_count']}/{info['max_players']}\n")
+
+        if players:
+            players_str = ''
+            for player in players['players']:
+                content += f"{player['name'].replace('`', '')}`  "
+                players_str += f"{player['name']}`"
+            if players_str != '':
+                content += "\n"
+        return content
+    except Exception as e:
+        print(f"Error: {e}")
+        return ""
+
+
+def query_all_servers_text() -> str:
+    info_data = ''
+    for s in SERVER_LIST:
+        info_data += query_server_text(s)
+    return info_data

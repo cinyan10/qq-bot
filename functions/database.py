@@ -12,7 +12,7 @@ db_config = {
     'host': DB_HOST,
     'database': 'gokz',
     'raise_on_warnings': True,
-    'port': DB_PORT,
+    'port': 25229,
 }
 
 KZ_MODES = {'kzt': 2, 'skz': 1, 'vnl': 0}

@@ -1,6 +1,5 @@
 import discord
 import requests
-from discord import Embed
 
 from config import *
 from functions.database import discord_id_to_steamid
@@ -45,7 +44,6 @@ def fetch_playerdata(steamid64, mode='kzt'):
     try:
         url = f"http://gokz.cn/api/rankings?page_size=1&search_text={steamid64}&mode={mode}"
         response = requests.get(url)
-        "STEAM_1:0:120327391"
         if response.status_code == 200:
             # Parse and return the JSON response
             try:
@@ -81,5 +79,5 @@ def get_rank(skill_score, ranking):
 
 
 if __name__ == "__main__":
-    rs = get_gokzcn_info(steamid=STEAMID)
+    rs = fetch_playerdata(STEAMID)
     print(rs)

@@ -15,7 +15,8 @@ class KzGlobalStats:
         if kzmode:
             kzmode = format_kzmode(kzmode.lower())
         self.maps = Maps(kzmode)
-
+        self.steamid64 = steamid64
+        self.steamid = convert_steamid(self.steamid64, "steamid")
         tp_data = cal_stats(fetch_global_stats(steamid64, kzmode, True))
         pro_data = cal_stats(fetch_global_stats(steamid64, kzmode, False))
 
@@ -87,6 +88,34 @@ class KzGlobalStats:
             return True
         else:
             return False
+
+    def text_stats(self) -> str:
+        content = ''
+        content += f"{self.name}\n"
+        content += f"{self.steamid} | {self.steamid64}\n"
+        content += f"总分: {add_commas(self.total_pts)} 平均: {int(self.total_avg_pts)}"
+
+        emojis = ["⬜", '🟦', '🟩', '🟨', '🟧', '🟥', '🟪', '⬛']
+        # ⬛ ⬜
+
+        tp_content = (f"🥇 {self.tp_wr} 🥈 {self.tp_silver} 🥉 {self.tp_copper} "
+                      f"总分:{add_commas(self.tp_total_pts)} 平均:{int(self.tp_avg_pts)}\n")
+        for i in range(1, 8):
+            tp_content += f"{percentage_bar(self.tp_tier_maps[i] / self.maps.tier[i], 16, emojis[i], emojis[0],
+                                            show_percentage=False, show_brackets=False)} "
+            tp_content += f"T{i} | {self.tp_tier_maps[i]}/{self.maps.tier[i]} | {int(self.tp_avg_tier_pts[i])}\n"
+
+        content += f"\nTP Stats\n" + tp_content
+
+        pro_content = (f"🥇 {self.pro_wr} 🥈 {self.pro_silver} 🥉 {self.pro_copper} "
+                       f"总分:{add_commas(self.pro_total_pts)} 平均:{int(self.pro_avg_pts)}\n")
+        for i in range(1, 8):
+            pro_content += f"{percentage_bar(self.pro_tier_maps[i] / self.maps.tier[i], 16, emojis[i], emojis[0],
+                                             show_percentage=False, show_brackets=False)} "
+            pro_content += f"T{i} | {self.pro_tier_maps[i]}/{self.maps.tier[i]} | {int(self.pro_avg_tier_pts[i])}\n"
+
+        content += f"\nPro Stats\n" + pro_content
+        return content
 
 
 def get_stats_embed(steamid64, kzmode):
