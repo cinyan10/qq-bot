@@ -1,0 +1,5 @@
+Jumpstats:
+Sync Strafes SteamID32 Pre Mode Max JumpType JumpID IsBlockJump Distance Created Block Airtime
+Firstjoin:
+name auth ip joindate lastseen timestamps whitelist
+
