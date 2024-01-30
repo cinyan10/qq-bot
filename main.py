@@ -83,9 +83,11 @@ async def info(message: Message, steamid=None, mode='kzt'):
     content += f"服务器内游玩时间：{h} 时 {m}分 {s}秒\n"
 
     # LJPB
-    ljpb = get_ljpb(steamid32, 'kzt', 0, 0)
-    content += f"LJPB : {ljpb['Distance']}"
-
+    try:
+        ljpb = get_ljpb(steamid32, 'kzt', 0, 0)
+        content += f"LJPB : {ljpb['Distance']}"
+    except Exception as e:
+        content += '获取LJPB数据失败'
     await message.reply(content=content)
 
 
