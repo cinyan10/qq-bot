@@ -13,7 +13,7 @@ from functions.steam.steam import convert_steamid, get_steam_pfp, get_steam_prof
 class KzGlobalStats:
     def __init__(self, steamid64, kzmode="kz_timer"):
         if kzmode:
-            kzmode = format_kzmode(kzmode.lower())
+            kzmode = format_kzmode(kzmode)
         self.maps = Maps(kzmode)
         self.steamid64 = steamid64
         self.steamid = convert_steamid(self.steamid64, "steamid")
