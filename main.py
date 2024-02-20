@@ -54,7 +54,7 @@ async def whitelist(message: Message):
 
     # Check if the player got enough pts
     modes = ['KZT', 'SKZ', 'VNL']
-    for i in range(0):
+    for i in range(3):
         await message.reply(content=f"正在查询{modes[i]}分数")
         stats = KzGlobalStats(steamid64, i)
         if stats.is_reach_pts():
