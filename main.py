@@ -31,7 +31,7 @@ async def whitelist(message: Message):
         await message.reply(content=f"❌请先绑定steamid噢")
         return
     else:
-        await message.reply(content=f"正在验证你的steam账号")
+        await message.reply(content=f"⏳正在验证你的steam账号")
     steamid64 = convert_steamid(steamid, 'steamid64')
 
     # Check if the player has been banned by VAC or multiple games
@@ -55,7 +55,7 @@ async def whitelist(message: Message):
     # Check if the player got enough pts
     modes = ['KZT', 'SKZ', 'VNL']
     for i in range(3):
-        await message.reply(content=f"正在查询{modes[i]}分数")
+        await message.reply(content=f"⏳正在查询{modes[i]}分数")
         stats = KzGlobalStats(steamid64, i)
         if stats.is_reach_pts():
             await message.reply(content="✅你的分数高于5W分")
